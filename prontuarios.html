@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida Plus - Prontuários</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            border: none;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table th {
+            font-weight: 600;
+            border-top: none;
+        }
+        .prontuario-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dee2e6;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #0d6efd;
+            border: 2px solid white;
+        }
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1rem;
+            }
+            .prontuario-header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .table-responsive {
+                margin: 0 -1rem;
+            }
+            .btn-group-sm > .btn, .btn-sm {
+                padding: 0.25rem 0.5rem;
+            }
+            .d-flex.gap-2 {
+                flex-wrap: wrap;
+            }
+            .d-flex.gap-2 .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            .input-group {
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Padronizado -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">
+                <img src="img/logosemfundo.png" alt="Vida Plus" style="height: 40px; margin-right: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-chart-line me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pacientes.html">
+                            <i class="fas fa-users me-2"></i>Pacientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="funcionarios.html">
+                            <i class="fas fa-user-md me-2"></i>Funcionários
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="telemedicina.html">
+                            <i class="fas fa-video me-2"></i>Telemedicina
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">
+                            <i class="fas fa-cog me-2"></i>Administração
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-2"></i>Administrador
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="perfil.html"><i class="fas fa-user me-2"></i>Meu Perfil</a></li>
+                            <li><a class="dropdown-item" href="configuracoes.html"><i class="fas fa-cog me-2"></i>Configurações</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <!-- Cabeçalho da Página -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h1 class="h3 mb-3 mb-md-0 fw-bold"><i class="fas fa-file-medical me-2"></i>Prontuários Eletrônicos</h1>
+            <div class="d-flex gap-2 w-100 w-md-auto">
+                <button class="btn btn-primary flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalNovoProntuario">
+                    <i class="fas fa-plus me-2"></i>Novo Prontuário
+                </button>
+                <button class="btn btn-success flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalImportar">
+                    <i class="fas fa-file-import me-2"></i>Importar
+                </button>
+                <button class="btn btn-info text-white flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalExportar">
+                    <i class="fas fa-file-export me-2"></i>Exportar
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtros e Busca -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Buscar prontuário...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option value="">Todos os Médicos</option>
+                            <option value="1">Dra. Ana Silva</option>
+                            <option value="2">Dr. Carlos Oliveira</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option value="">Todas as Especialidades</option>
+                            <option value="cardiologia">Cardiologia</option>
+                            <option value="neurologia">Neurologia</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">
+                            <i class="fas fa-filter me-2"></i>Filtrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Prontuários -->
+        <section id="lista-prontuarios" class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-hashtag me-2"></i>ID</th>
+                                    <th><i class="fas fa-user me-2"></i>Paciente</th>
+                                    <th><i class="fas fa-user-md me-2"></i>Médico</th>
+                                    <th><i class="fas fa-stethoscope me-2"></i>Especialidade</th>
+                                    <th><i class="fas fa-calendar me-2"></i>Data</th>
+                                    <th><i class="fas fa-info-circle me-2"></i>Status</th>
+                                    <th><i class="fas fa-cog me-2"></i>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#12345</td>
+                                    <td>Maria Oliveira</td>
+                                    <td>Dra. Ana Silva</td>
+                                    <td>Cardiologia</td>
+                                    <td>15/03/2024</td>
+                                    <td><span class="badge bg-success">Concluído</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary me-2" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-info me-2" title="Visualizar">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#12346</td>
+                                    <td>João Silva</td>
+                                    <td>Dr. Carlos Oliveira</td>
+                                    <td>Neurologia</td>
+                                    <td>15/03/2024</td>
+                                    <td><span class="badge bg-warning">Em Andamento</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary me-2" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-info me-2" title="Visualizar">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#12347</td>
+                                    <td>Ana Santos</td>
+                                    <td>Dra. Ana Silva</td>
+                                    <td>Cardiologia</td>
+                                    <td>14/03/2024</td>
+                                    <td><span class="badge bg-info">Em Revisão</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary me-2" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-info me-2" title="Visualizar">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estatísticas -->
+        <section id="estatisticas" class="mb-5">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h6 class="card-title">Total de Prontuários</h6>
+                            <h2 class="mb-0">2.891</h2>
+                            <small>+15% este mês</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h6 class="card-title">Concluídos</h6>
+                            <h2 class="mb-0">2.450</h2>
+                            <small>85% do total</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <h6 class="card-title">Em Andamento</h6>
+                            <h2 class="mb-0">341</h2>
+                            <small>12% do total</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h6 class="card-title">Em Revisão</h6>
+                            <h2 class="mb-0">100</h2>
+                            <small>3% do total</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Novo Prontuário -->
+    <div class="modal fade" id="modalNovoProntuario" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-medical me-2"></i>Novo Prontuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoProntuario">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Paciente</label>
+                                <select class="form-select" required>
+                                    <option value="">Selecione um paciente</option>
+                                    <option value="1">Maria Oliveira</option>
+                                    <option value="2">João Silva</option>
+                                    <option value="3">Ana Santos</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Médico</label>
+                                <select class="form-select" required>
+                                    <option value="">Selecione um médico</option>
+                                    <option value="1">Dra. Ana Silva</option>
+                                    <option value="2">Dr. Carlos Oliveira</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Data da Consulta</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tipo de Atendimento</label>
+                                <select class="form-select" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="consulta">Consulta</option>
+                                    <option value="retorno">Retorno</option>
+                                    <option value="emergencia">Emergência</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Queixa Principal</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">História da Doença Atual</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Exame Físico</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Diagnóstico</label>
+                                <textarea class="form-control" rows="2" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Conduta</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="formNovoProntuario">
+                        <i class="fas fa-save me-2"></i>Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Importar -->
+    <div class="modal fade" id="modalImportar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-import me-2"></i>Importar Prontuários</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formImportar">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Arquivo</label>
+                            <input type="file" class="form-control" accept=".pdf,.doc,.docx" required>
+                            <small class="text-muted">Formatos aceitos: PDF, DOC, DOCX</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Formato do Arquivo</label>
+                            <select class="form-select" required>
+                                <option value="">Selecione o formato</option>
+                                <option value="pdf">PDF</option>
+                                <option value="doc">DOC</option>
+                                <option value="docx">DOCX</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="formImportar">
+                        <i class="fas fa-file-import me-2"></i>Importar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Exportar -->
+    <div class="modal fade" id="modalExportar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-export me-2"></i>Exportar Prontuários</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formExportar">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Formato</label>
+                            <select class="form-select" required>
+                                <option value="">Selecione o formato</option>
+                                <option value="pdf">PDF</option>
+                                <option value="doc">DOC</option>
+                                <option value="docx">DOCX</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Período</label>
+                            <div class="row g-2">
+                                <div class="col">
+                                    <input type="date" class="form-control" placeholder="Data Inicial" required>
+                                </div>
+                                <div class="col">
+                                    <input type="date" class="form-control" placeholder="Data Final" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="formExportar">
+                        <i class="fas fa-file-export me-2"></i>Exportar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/prontuarios.js"></script>
+</body>
+</html> 
