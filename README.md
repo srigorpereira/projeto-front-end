@@ -66,4 +66,4 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## Contato
 Seu Nome - igor.renan97@hotmail.com
-Link do Projeto: [[https://github.com/seu-usuario/vida-plus](https://github.com/seu-usuario/vida-plus) ](https://srigorpereira.github.io/projeto-front-end/)
+Link do Projeto: https://srigorpereira.github.io/projeto-front-end/
