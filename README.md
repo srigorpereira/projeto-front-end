@@ -65,5 +65,5 @@ O sistema foi desenvolvido seguindo as diretrizes WCAG 2.1, incluindo:
 Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
 ## Contato
-Seu Nome - seu.email@exemplo.com
-Link do Projeto: [https://github.com/seu-usuario/vida-plus](https://github.com/seu-usuario/vida-plus) 
+Seu Nome - igor.renan97@hotmail.com
+Link do Projeto: [[https://github.com/seu-usuario/vida-plus](https://github.com/seu-usuario/vida-plus) ](https://srigorpereira.github.io/projeto-front-end/)
